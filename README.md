@@ -2,6 +2,10 @@
 
 ## Schematics
 
+![Sega DB9 to USB](imgs/schematic.png)
+
+## Other Schematics
+
 ### Arduino Pro Mini
 
 ![Arduino Pro Mini](imgs/108.FUNPRO-MICRO-AT32-9.png)
