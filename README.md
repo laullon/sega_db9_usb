@@ -16,4 +16,4 @@
 
 ### SEGA DB9
 
-![sega db9](imgs/genesis_joystick.gif)
+![sega db9](imgs/genesis_joystick.png)
