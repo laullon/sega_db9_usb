@@ -23,19 +23,20 @@ union pins
 Joystick_ joysticks[2] = {
     Joystick_(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_MULTI_AXIS, BUTTONS, 0,
               true, true, false, false, false, false, false, false, false, false, false),
-    Joystick_(JOYSTICK_DEFAULT_REPORT_ID + 1, JOYSTICK_TYPE_GAMEPAD, BUTTONS, 0,
+    Joystick_(JOYSTICK_DEFAULT_REPORT_ID + 10, JOYSTICK_TYPE_GAMEPAD, BUTTONS, 0,
               true, true, false, false, false, false, false, false, false, false, false)};
 
 const int pinToButtonMap = 2;
 
-byte selectPins[2]{9, 10};
-byte selectVals[8]{0, 0, 0, 0, 0, 0, 1, 1};
+byte selectPin = 15;
+byte selectVals[4]{LOW, HIGH, HIGH, LOW};
 
 void setup()
 {
-  ctls[0].pins = {{{02, 03}, {04, 05}}, {06, 07, 06, 07}};
-  ctls[1].pins = {{{21, 20}, {19, 18}}, {15, 14, 15, 14}};
+  ctls[0].pins = {{{2, 3}, {4, 5}}, {9, 9, 8, 8}};
+  ctls[1].pins = {{{21, 20}, {19, 20}}, {10, 10, 16, 16}};
 
+  pinMode(selectPin, OUTPUT);
   for (int ctl = 0; ctl < 2; ctl++)
   {
     for (int index = 0; index < (int)sizeof(ctls[ctl].pins); index++)
@@ -50,6 +51,7 @@ void loop()
 {
   for (int ctl = 0; ctl < 2; ctl++)
   {
+    digitalWrite(selectPin, selectVals[HIGH]);
     for (int axis = 0; axis < 2; axis++)
     {
       int read = 512;
@@ -71,6 +73,7 @@ void loop()
 
     for (int index = 0; index < BUTTONS; index++)
     {
+      digitalWrite(selectPin, selectVals[index]);
       int read = !digitalRead(ctls[ctl].pins.butons[index]);
       if (status[ctl].butons[index] != read)
       {

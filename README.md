@@ -1,5 +1,9 @@
 # Sega DB9 to USB - Arduino Leonardo ( atmega32u4 )
 
+## Board
+
+![board](imgs/board.jpg)
+
 ## Schematics
 
 ![Sega DB9 to USB](imgs/schematic.png)
