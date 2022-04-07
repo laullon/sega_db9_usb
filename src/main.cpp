@@ -1,6 +1,6 @@
 #include <Joystick.h>
 
-#define BUTTONS 4
+#define BUTTONS 5
 
 struct status
 {
@@ -9,7 +9,7 @@ struct status
 
 union pins
 {
-  byte _pins[8];
+  byte _pins[9];
   struct
   {
     struct
@@ -21,20 +21,20 @@ union pins
 } ctls[2];
 
 Joystick_ joysticks[2] = {
-    Joystick_(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_MULTI_AXIS, BUTTONS, 0,
+    Joystick_(JOYSTICK_DEFAULT_REPORT_ID + 10, JOYSTICK_TYPE_MULTI_AXIS, BUTTONS, 0,
               true, true, false, false, false, false, false, false, false, false, false),
-    Joystick_(JOYSTICK_DEFAULT_REPORT_ID + 10, JOYSTICK_TYPE_GAMEPAD, BUTTONS, 0,
+    Joystick_(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_GAMEPAD, BUTTONS, 0,
               true, true, false, false, false, false, false, false, false, false, false)};
 
 const int pinToButtonMap = 2;
 
 byte selectPin = 15;
-byte selectVals[4]{LOW, HIGH, HIGH, LOW};
+byte selectVals[BUTTONS]{LOW, HIGH, HIGH, LOW, LOW};
 
 void setup()
 {
-  ctls[0].pins = {{{2, 3}, {4, 5}}, {9, 9, 8, 8}};
-  ctls[1].pins = {{{21, 20}, {19, 20}}, {10, 10, 16, 16}};
+  ctls[0].pins = {{{18, 19}, {20, 21}}, {10, 10, 16, 16, 1}};
+  ctls[1].pins = {{{5, 4}, {3, 2}}, {9, 9, 8, 8, 7}};
 
   pinMode(selectPin, OUTPUT);
   for (int ctl = 0; ctl < 2; ctl++)
@@ -47,8 +47,14 @@ void setup()
   }
 }
 
+int s = HIGH;
+
 void loop()
 {
+  // digitalWrite(17, s);
+  // digitalWrite(14, s);
+  s = HIGH - s;
+
   for (int ctl = 0; ctl < 2; ctl++)
   {
     digitalWrite(selectPin, selectVals[HIGH]);
